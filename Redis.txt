@@ -1,0 +1,280 @@
+apt-get install redis-server -y
+
+$ redis-cli
+127.0.0.1:6379>
+
+SET model_name Price
+
+SET reder-x 50000
+SET yphone  20000
+SET trapo 25000
+
+INCRBY trapo 2000
+INCR yphone 3000
+DECRBY reder-x 1000
+
+
+
+zadd myset1 1 "a" 2 "b" 3 "c"
+zadd myset2 4 "b" 1 "c" 0 "d"
+
+Find intersection of two sorted sets s below:
+Type the command below to take the intersection of myset1 and myset2 :
+
+zinterstore out 2 myset1 myset2
+
+Type the below to see the resulting intersection output Sorted set "out" :
+
+zrange out 0 -1 withscores
+
+
+
+
+$ redis-cli
+127.0.0.1:6379> zadd myset1 1 "a" 2 "b" 3 "c"
+(integer) 3
+127.0.0.1:6379> zadd myset2 4 "b" 1 "c" 0 "d"
+(integer) 3
+127.0.0.1:6379> zinterstore out 2 myset1 myset2
+(integer) 2
+127.0.0.1:6379> zrange out 0 -1 withscores
+1) "c"
+2) "4"
+3) "b"
+4) "6"
+
+
+Find union of two sorted sets as below :
+Type the command below to take the union of myset1 and myset2
+
+zunionstore unout 2 myset1 myset2
+
+Type the below to see the resulting union output Sorted set "unout" :
+
+zrange unout 0 -1 withscores
+
+127.0.0.1:6379> zunionstore unout 2 myset1 myset2
+(integer) 4
+127.0.0.1:6379> zrange unout 0 -1 withscores
+1) "d"
+2) "0"
+3) "a"
+4) "1"
+5) "c"
+6) "4"
+7) "b"
+8) "6"
+
+
+
+
+Redis Strings
+There is a supermarket of name "Thorta" and it contains items Soaps, Snacks, Chocolates and Shampoos.
+
+Using lists, write a command to add the list of avaiable items under key avail_items
+
+
+ lpush avail_items snack chock Chocolates Shampoos
+
+
+$redis-cli
+
+127.0.0.1:6379> lpush avail_items snack chock Chocolates Shampoos
+(integer) 4
+
+
+
+Lists
+
+$ redis-cli
+127.0.0.1:6379> lpush name Thorta
+(integer) 1
+127.0.0.1:6379> lpush avail_items Soaps
+(integer) 1
+127.0.0.1:6379> lpush avail_items Snacks
+(integer) 2
+127.0.0.1:6379> lpush avail_items Chocolates
+(integer) 3
+127.0.0.1:6379> lpush avail_items Shampoos
+(integer) 4
+
+
+127.0.0.1:6379> LRANGE avail_items 0 -1
+1) "Shampoos"
+2) "Chocolates"
+3) "Snacks"
+4) "Soaps"
+127.0.0.1:6379>
+
+
+127.0.0.1:6379> lpush soaps Aegis
+(integer) 1
+127.0.0.1:6379> lpush soaps Busk
+(integer) 2
+127.0.0.1:6379> lpush soaps camo
+(integer) 3
+127.0.0.1:6379> LRANGE soaps 0 -1
+1) "camo"
+2) "Busk"
+3) "Aegis"
+127.0.0.1:6379>
+
+
+
+127.0.0.1:6379> lpush snacks Adge
+(integer) 1
+127.0.0.1:6379> lpush snacks limeh
+(integer) 2
+127.0.0.1:6379> lpush snacks Axen
+(integer) 3
+127.0.0.1:6379> lpush snacks Bevy
+(integer) 4
+127.0.0.1:6379> lpush snacks Berm
+(integer) 5
+127.0.0.1:6379> LRANGE snacks 0 -1
+1) "Berm"
+2) "Bevy"
+3) "Axen"
+4) "limeh"
+5) "Adge"
+
+
+
+SET:-
+$ redis-cli
+127.0.0.1:6379> sadd avail_depts ECE CSE EEE
+(integer) 3
+127.0.0.1:6379> SMEMBERS  avail_depts
+1) "ECE"
+2) "EEE"
+3) "CSE"
+
+127.0.0.1:6379> sadd ECE Ayne Anson Barl Baretzi
+(integer) 4
+127.0.0.1:6379> SMEMBERS ECE
+1) "Barl"
+2) "Ayne"
+3) "Baretzi"
+4) "Anson"
+
+127.0.0.1:6379> sadd cse Plex Adam Scott
+(integer) 3
+127.0.0.1:6379> SMEMBERS cse
+1) "Adam"
+2) "Scott"
+3) "Plex"
+
+127.0.0.1:6379> sadd eee Priye Slorena
+(integer) 2
+127.0.0.1:6379> SMEMBERS eee
+1) "Slorena"
+2) "Priye"
+
+HAshes:-
+following json response.
+
+{
+"city": "New Delhi",
+"hotel": "Maidens Hotel",
+"date": "2017-10-06",
+"room_type": "single",
+"occupancy": 2,
+"avail_count": 13,
+"booked_count": 4,
+"currencyisocode": "INR",
+"currency_name": "Rupee",
+"provider": {
+"name": "makemytrip",
+"competitor_type": "partner"
+},
+"availroomnumbers": [ 3, 7, 23, 29, 41 ]
+}
+Try out how to store the following json structure in Redis.
+
+HMSET roomrate:New_Delhi:Maidens_Hotel:2017-10-06:single  city "New Delhi" hotel "Maidens Hotel" date "2017-10-06" room_type 2 occupancy 2 avail_count 13 booked_count 4 currency_iso_code INR currency_name Rupee 
+
+HMSET roomrate:New_Delhi:Maidens_Hotel:2017-10-06:single "provider name" makemytrip competitor_type partner
+
+HMSET roomrate:New_Delhi:Maidens_Hotel:2017-10-06:single "provider name" oyo competitor_type partner
+
+
+27.0.0.1:6379> HMSET roomrate:New_Delhi:Maidens_Hotel:2017-10-06:single  city "New Delhi" hotel "
+Maidens Hotel" date "2017-10-06" room_type 2 occupancy 2 avail_count 13 booked_count 4 currency_is
+o_code INR currency_name Rupee
+OK
+127.0.0.1:6379> HMSET roomrate:New_Delhi:Maidens_Hotel:2017-10-06:single "provider name" makemytrip competitor_type partner
+OK
+127.0.0.1:6379> HMSET roomrate:New_Delhi:Maidens_Hotel:2017-10-06:single "provider name" oyo competitor_type partner
+OK
+
+
+127.0.0.1:6379> HGETALL  roomrate:New_Delhi:Maidens_Hotel:2017-10-06:single
+ 1) "city"
+ 2) "New Delhi"
+ 3) "hotel"
+ 4) "Maidens Hotel"
+ 5) "date"
+ 6) "2017-10-06"
+ 7) "room_type"
+ 8) "2"
+ 9) "occupancy"
+10) "2"
+11) "avail_count"
+12) "13"
+13) "booked_count"
+14) "4"
+15) "currency_iso_code"
+16) "INR"
+17) "currency_name"
+18) "Rupee"
+127.0.0.1:6379> HMSET roomrate:New_Delhi:Maidens_Hotel:2017-10-06:single:provider name makemytrip
+competitor_type partner
+OK
+127.0.0.1:6379> HGETALL  roomrate:New_Delhi:Maidens_Hotel:2017-10-06:single 1) "city"
+ 2) "New Delhi"
+ 3) "hotel"
+ 4) "Maidens Hotel"
+ 5) "date"
+ 6) "2017-10-06"
+ 7) "room_type"
+ 8) "2"
+ 9) "occupancy"
+10) "2"
+11) "avail_count"
+12) "13"
+13) "booked_count"
+14) "4"
+15) "currency_iso_code"
+16) "INR"
+17) "currency_name"
+18) "Rupee"
+127.0.0.1:6379> HMSET roomrate:New_Delhi:Maidens_Hotel:2017-10-06:single "provider name" makemytrip competitor_type partner
+OK
+
+
+127.0.0.1:6379> HGETALL  roomrate:New_Delhi:Maidens_Hotel:2017-10-06:single
+ 1) "city"
+ 2) "New Delhi"
+ 3) "hotel"
+ 4) "Maidens Hotel"
+ 5) "date"
+ 6) "2017-10-06"
+ 7) "room_type"
+ 8) "2"
+ 9) "occupancy"
+10) "2"
+11) "avail_count"
+12) "13"
+13) "booked_count"
+14) "4"
+15) "currency_iso_code"
+16) "INR"
+17) "currency_name"
+18) "Rupee"
+19) "provider name"
+20) "makemytrip"
+21) "competitor_type"
+22) "partner"
+
+
+SADD roomrate:New_Delhi:Maidens_Hotel:2017-10-06:single:availroomnumbers 3 7 23 29 41 
